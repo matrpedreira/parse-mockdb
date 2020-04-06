@@ -742,12 +742,14 @@ function handlePostRequest(request) {
 
     const newId = crypto.newObjectId();
     const now = new Date();
+    const createdAt = request.data.createdAt || now;
+    const updatedAt = request.data.updatedAt || now;
 
     const ops = extractOps(result);
 
     newObject = Object.assign(
       result,
-      { objectId: newId, createdAt: now, updatedAt: now }
+      { objectId: newId, createdAt: createdAt, updatedAt: updatedAt }
     );
 
     applyOps(newObject, ops, className);
