@@ -1852,7 +1852,7 @@ describe('ParseMock', () => {
     });
   });
 
-  it.only('should set custom Id on Item creation', () => {
+  it('should set custom Id on Item creation', () => {
     const item = new Item();
     item.set('newID', 'TESTE');
     return item.save()
