@@ -739,17 +739,14 @@ function handlePostRequest(request) {
   let newObject;
   return runHook(className, 'beforeSave', request.data).then(result => {
     const changedKeys = getChangedKeys(request.data, result);
-
-    const newId = crypto.newObjectId();
+    const newId = request.data.newID || crypto.newObjectId();
     const now = new Date();
-    const createdAt = request.data.createdAt || now;
-    const updatedAt = request.data.updatedAt || now;
 
     const ops = extractOps(result);
 
     newObject = Object.assign(
       result,
-      { objectId: newId, createdAt: createdAt, updatedAt: updatedAt }
+      { objectId: newId, createdAt: now, updatedAt: now }
     );
 
     applyOps(newObject, ops, className);

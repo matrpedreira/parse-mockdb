@@ -36,7 +36,6 @@ function createBrandP(name) {
 function createItemP(price, brand, extra) {
   const item = new Item();
   item.set('price', price);
-
   if (brand) {
     item.set('brand', brand);
   }
@@ -1851,5 +1850,17 @@ describe('ParseMock', () => {
         assert.equal(count, 0);
       });
     });
+  });
+
+  it.only('should set custom Id on Item creation', () => {
+    const item = new Item();
+    item.set('newID', 'TESTE');
+    return item.save()
+      .then(() => {
+        const query = new Parse.Query(Item);
+        return query.get('TESTE').then(fetchedItem => {
+          assert.equal(fetchedItem.id, item.id);
+        });
+      });
   });
 });
