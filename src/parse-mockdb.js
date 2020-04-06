@@ -741,12 +741,15 @@ function handlePostRequest(request) {
     const changedKeys = getChangedKeys(request.data, result);
     const newId = request.data.newID || crypto.newObjectId();
     const now = new Date();
-
+    let createdAt = now;
+    if (request.data.newCreatedAt) {
+      createdAt = new Date(request.data.newCreatedAt.iso);
+    }
     const ops = extractOps(result);
 
     newObject = Object.assign(
       result,
-      { objectId: newId, createdAt: now, updatedAt: now }
+      { objectId: newId, createdAt, updatedAt: now }
     );
 
     applyOps(newObject, ops, className);

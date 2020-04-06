@@ -1863,4 +1863,14 @@ describe('ParseMock', () => {
         });
       });
   });
+
+  it('should set custom createdAt on Item creation', () => {
+    const item = new Item();
+    const date = new Date('2021-03-25');
+    item.set('newCreatedAt', date);
+    return item.save()
+      .then((savedItem) => {
+        assert.equal(savedItem.get('createdAt').getTime(), date.getTime());
+      });
+  });
 });
